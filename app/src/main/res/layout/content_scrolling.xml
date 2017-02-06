@@ -106,12 +106,14 @@
                         android:text="Team A" />
 
                     <TextView
+                        android:id="@+id/game_view_A"
                         style="@style/bp_row"
                         android:layout_weight="1"
                         android:gravity="center"
                         android:text="0" />
 
                     <TextView
+                        android:id="@+id/set_view_A"
                         style="@style/bp_row"
                         android:layout_weight="1"
                         android:gravity="center"
@@ -129,12 +131,14 @@
                         android:text="Team B" />
 
                     <TextView
+                        android:id="@+id/game_view_B"
                         style="@style/bp_row"
                         android:layout_weight="1"
                         android:gravity="center"
                         android:text="0" />
 
                     <TextView
+                        android:id="@+id/set_view_B"
                         style="@style/bp_row"
                         android:layout_weight="1"
                         android:gravity="center"

@@ -13,7 +13,7 @@ public class MainActivity extends AppCompatActivity {
     CollapsingToolbarLayout collapsingToolbar;
     Toolbar toolbar;
     CardView cardWin, cardPoint;
-    TextView scoreViewA, scoreViewB, winnerText;
+    TextView scoreViewA, scoreViewB, winnerText, gameViewA, gameViewB, setViewA, setViewB;
     private int scoreTeamA, scoreTeamB;
     private int gameA, gameB, setA, setB;
 
@@ -25,6 +25,10 @@ public class MainActivity extends AppCompatActivity {
         if (savedInstanceState != null) {
             scoreTeamA = savedInstanceState.getInt("TEAM_A_SCORE");
             scoreTeamB = savedInstanceState.getInt("TEAM_B_SCORE");
+            gameA = savedInstanceState.getInt("TEAM_A_GAME");
+            gameB = savedInstanceState.getInt("TEAM_B_GAME");
+            setA = savedInstanceState.getInt("TEAM_A_SET");
+            setB = savedInstanceState.getInt("TEAM_B_SET");
         }else
             init();
         setContentView(R.layout.activity_main);
@@ -39,6 +43,10 @@ public class MainActivity extends AppCompatActivity {
         super.onSaveInstanceState(outState);
         outState.putInt("TEAM_A_SCORE", scoreTeamA);
         outState.putInt("TEAM_B_SCORE", scoreTeamB);
+        outState.putInt("TEAM_A_GAME", gameA);
+        outState.putInt("TEAM_B_GAME", gameB);
+        outState.putInt("TEAM_A_SET", setA);
+        outState.putInt("TEAM_B_SET", setB);
     }
 
     @Override
@@ -46,6 +54,10 @@ public class MainActivity extends AppCompatActivity {
         super.onRestoreInstanceState(savedInstanceState);
         scoreViewA.setText(String.valueOf(savedInstanceState.getInt("TEAM_A_SCORE")));
         scoreViewB.setText(String.valueOf(savedInstanceState.getInt("TEAM_B_SCORE")));
+        gameViewA.setText(String.valueOf(savedInstanceState.getInt("TEAM_A_GAME")));
+        gameViewB.setText(String.valueOf(savedInstanceState.getInt("TEAM_B_GAME")));
+        setViewA.setText(String.valueOf(savedInstanceState.getInt("TEAM_A_SET")));
+        setViewB.setText(String.valueOf(savedInstanceState.getInt("TEAM_B_SET")));
     }
 
     //initialize
@@ -56,6 +68,13 @@ public class MainActivity extends AppCompatActivity {
 
         scoreViewA = (TextView) findViewById(R.id.team_a_score);
         scoreViewB = (TextView) findViewById(R.id.team_b_score);
+
+        gameViewA = (TextView) findViewById(R.id.game_view_A);
+        gameViewB = (TextView) findViewById(R.id.game_view_B);
+
+        setViewA = (TextView) findViewById(R.id.set_view_A);
+        setViewB = (TextView) findViewById(R.id.set_view_B);
+
         winnerText = (TextView) findViewById(R.id.winner);
 
         setActionOnScrollUp();
@@ -95,6 +114,20 @@ public class MainActivity extends AppCompatActivity {
     public void displayForTeamB(int score) {
         scoreViewB.setText(String.valueOf(score));
     }
+    // Display the Game score.
+    public void displayGameA(int score){
+        gameViewA.setText(String.valueOf(score));
+    }
+    public void displayGameB(int score){
+        gameViewB.setText(String.valueOf(score));
+    }
+    // Display the Set score.
+    public void displaySetA(int score){
+        setViewA.setText(String.valueOf(score));
+    }
+    public void displaySetB(int score){
+        setViewB.setText(String.valueOf(score));
+    }
 
     public void setGameA(){
         setSetA();
@@ -102,6 +135,7 @@ public class MainActivity extends AppCompatActivity {
             gameA++;
         }else
             gameA = 0;
+        displayGameA(gameA);
     }
     public void setGameB(){
         setSetB();
@@ -109,16 +143,19 @@ public class MainActivity extends AppCompatActivity {
             gameB++;
         }else
             gameB = 0;
+        displayGameB(gameB);
     }
 
     public void setSetA(){
         if(gameA == 3 && setA < 3)
             setA ++;
+        displaySetA(setA);
         winner();
     }
     public void setSetB(){
         if(gameB == 3 && setB < 3)
             setB ++;
+        displaySetB(setB);
         winner();
     }
 

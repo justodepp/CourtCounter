@@ -2,4 +2,25 @@
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="app_bar_height">180dp</dimen>
+    <!-- Card -->
+    <dimen name="elevation">2dp</dimen>
+    <dimen name="radius">2dp</dimen>
+    <!-- First Card -->
+    <dimen name="c_htop">16dp</dimen>
+    <dimen name="c_hbottom">8dp</dimen>
+    <!-- Team Name -->
+    <dimen name="w_padding">16dp</dimen>
+    <dimen name="w_size">45sp</dimen>
+    <!-- Team Name -->
+    <dimen name="tn_p">16dp</dimen>
+    <dimen name="tn_size">20sp</dimen>
+    <!-- Board -->
+    <dimen name="bp_size">16sp</dimen>
+    <!-- Point -->
+    <dimen name="p_width">0dp</dimen>
+    <dimen name="p_padding_b">24dp</dimen>
+    <dimen name="p_text_size">56sp</dimen>
+    <!-- View -->
+    <dimen name="v_m">16dp</dimen>
 </resources>

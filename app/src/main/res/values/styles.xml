@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Primary theme color of the app (sets background color of app bar) -->
@@ -7,15 +7,83 @@
         <item name="colorButtonNormal">#FF9800</item>
     </style>
 
-    <style name="CardStyle">
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="std_layout">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="cardCornerRadius">2dp</item>
-        <item name="cardElevation">2dp</item>
     </style>
 
-    <style name="score">
-
+    <style name="CardStyle" parent="std_layout">
+        <item name="cardCornerRadius">@dimen/radius</item>
+        <item name="cardElevation">@dimen/elevation</item>
     </style>
 
+    <!-- Image Header -->
+    <style name="h_image" parent="std_layout">
+        <item name="android:scaleType">centerCrop</item>
+        <item name="android:src">@drawable/img_header</item>
+        <item name="android:contentDescription">Header Ping Pong Image</item>
+    </style>
+
+    <!-- Winner -->
+    <style name="winner" parent="std_layout">
+        <item name="android:fontFamily" tools:targetApi="jelly_bean">sans-serif-light</item>
+        <item name="android:gravity">center</item>
+        <item name="android:padding">@dimen/w_padding</item>
+        <item name="android:text">team win</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textSize">@dimen/w_size</item>
+        <item name="android:background">@android:color/holo_green_light</item>
+    </style>
+
+    <!-- Point Section -->
+    <style name="team_name" parent="std_layout">
+        <item name="android:fontFamily" tools:targetApi="jelly_bean">sans-serif-medium</item>
+        <item name="android:gravity">center</item>
+        <item name="android:padding">@dimen/tn_p</item>
+        <item name="android:text">Team B</item>
+        <item name="android:textColor">#616161</item>
+        <item name="android:textSize">@dimen/tn_size</item>
+    </style>
+
+    <style name="team_point" parent="std_layout">
+        <item name="android:fontFamily" tools:targetApi="jelly_bean">sans-serif-light</item>
+        <item name="android:gravity">center</item>
+        <item name="android:paddingBottom">@dimen/p_padding_b</item>
+        <item name="android:text">0</item>
+        <item name="android:textColor">#000000</item>
+        <item name="android:textSize">@dimen/p_text_size</item>
+    </style>
+
+    <style name="view_point">
+        <item name="android:layout_width">1dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_marginBottom">@dimen/v_m</item>
+        <item name="android:layout_marginTop">@dimen/v_m</item>
+        <item name="android:background">@android:color/darker_gray</item>
+    </style>
+
+    <style name="layout_point">
+        <item name="android:layout_width">@dimen/p_width</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:orientation">vertical</item>
+    </style>
+
+    <!-- Board Point -->
+    <style name="bp_head">
+        <item name="android:layout_width">@dimen/p_width</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:fontFamily" tools:targetApi="jelly_bean">sans-serif-medium</item>
+        <item name="android:textColor">#000000</item>
+        <item name="android:textSize">@dimen/bp_size</item>
+    </style>
+
+    <style name="bp_row">
+        <item name="android:layout_width">@dimen/p_width</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
 </resources>

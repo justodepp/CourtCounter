@@ -1,5 +1,7 @@
 package com.example.android.courtcounter;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.content.res.ResourcesCompat;
@@ -16,16 +18,18 @@ public class MainActivity extends AppCompatActivity {
     TextView scoreViewA, scoreViewB, winnerText;
     private int scoreTeamA, scoreTeamB;
     private int gameA, gameB, setA, setB;
-    private boolean advantage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // set the user interface layout for this Activity
-        // the layout file is defined in the project res/layout/main_activity.xml file
+
+        // recovering the instance state
+        if (savedInstanceState != null) {
+            scoreTeamA = savedInstanceState.getInt("TEAM_A_SCORE");
+            scoreTeamB = savedInstanceState.getInt("TEAM_B_SCORE");
+        }else
+            init();
         setContentView(R.layout.activity_main);
-        // initialize member view so we can manipulate it later
-        init();
     }
 
     // This callback is called only when there is a saved instance previously saved using
@@ -33,13 +37,17 @@ public class MainActivity extends AppCompatActivity {
     // other state here, possibly usable after onStart() has completed.
     // The savedInstanceState Bundle is same as the one used in onCreate().
     @Override
-    public void onRestoreInstanceState(Bundle savedInstanceState) {
-    }
-    // invoked when the activity may be temporarily destroyed, save the instance state here
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        // call superclass to save any view hierarchy
+    protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
+        outState.putInt("TEAM_A_SCORE", scoreTeamA);
+        outState.putInt("TEAM_B_SCORE", scoreTeamB);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        scoreViewA.setText(String.valueOf(savedInstanceState.getInt("TEAM_A_SCORE")));
+        scoreViewB.setText(String.valueOf(savedInstanceState.getInt("TEAM_B_SCORE")));
     }
 
     //initialize
@@ -51,8 +59,6 @@ public class MainActivity extends AppCompatActivity {
         scoreViewA = (TextView) findViewById(R.id.team_a_score);
         scoreViewB = (TextView) findViewById(R.id.team_b_score);
         winnerText = (TextView) findViewById(R.id.winner);
-
-        advantage = false;
 
         setActionOnScrollUp();
     }
@@ -67,62 +73,66 @@ public class MainActivity extends AppCompatActivity {
     }
     //Increase the score for Team A.
     public void addForTeamA(View v) {
-        if(scoreTeamA < 10 && !advantage)
-        scoreTeamA ++;
+        setGameA();
+        if(scoreTeamA < 11)
+            scoreTeamA ++;
+        else
+            scoreTeamA = 0;
         displayForTeamA(scoreTeamA);
     }
     //Increase the score for Team B.
     public void addForTeamB(View v) {
-        scoreTeamB ++;
+        setGameB();
+        if(scoreTeamB < 11)
+            scoreTeamB ++;
+        else
+            scoreTeamB = 0;
         displayForTeamB(scoreTeamB);
     }
     //Displays the given score for Team A.
     public void displayForTeamA(int score) {
         scoreViewA.setText(String.valueOf(score));
-        setGameA();
     }
     // Displays the given score for Team B.
     public void displayForTeamB(int score) {
         scoreViewB.setText(String.valueOf(score));
-        setGameB();
     }
 
     public void setGameA(){
-        if (scoreTeamA == 45 ){
-            gameA++;
-        }
         setSetA();
+        if (scoreTeamA == 11 && gameA < 3){
+            gameA++;
+        }else
+            gameA = 0;
     }
     public void setGameB(){
-        if (scoreTeamB == 45 ){
-            gameB++;
-        }
         setSetB();
+        if (scoreTeamB == 11 && gameB < 3 ){
+            gameB++;
+        }else
+            gameB = 0;
     }
 
     public void setSetA(){
-        if(gameA > gameB && gameA == 11 && gameB >=9)
+        if(gameA == 3 && setA < 3)
             setA ++;
-        else if(gameA == 10 && gameB == 10) {
-            advantage = true;
-        }
         winner();
     }
     public void setSetB(){
-        if(gameB == 11)
+        if(gameB == 3 && setB < 3)
             setB ++;
         winner();
     }
 
     //winner card
     public void winner(){
-        if(setA > setB && setA > 3){
+        if(setA > setB && setA == 3){
             cardWin.setVisibility(View.VISIBLE);
             cardWin.setPadding(cardWin.getPaddingLeft(),16,cardWin.getPaddingRight(),cardWin.getContentPaddingBottom());
             cardPoint.setPadding(cardPoint.getPaddingLeft(),8,cardPoint.getPaddingRight(),cardPoint.getContentPaddingBottom());
             winnerText.setText("team a win");
             winnerText.setAllCaps(true);
-        }else if(setB > setA && setB > 3){
+        }else if(setB > setA && setB == 3){
             cardWin.setVisibility(View.VISIBLE);
             cardWin.setPadding(cardWin.getPaddingLeft(),16,cardWin.getPaddingRight(),cardWin.getContentPaddingBottom());
             cardPoint.setPadding(cardPoint.getPaddingLeft(),8,cardPoint.getPaddingRight(),cardPoint.getContentPaddingBottom());
@@ -135,6 +145,7 @@ public class MainActivity extends AppCompatActivity {
     */
     public void resetScore(View v) {
         scoreTeamA = scoreTeamB = gameA = gameB = setA = setB = 0;
+        cardWin.setVisibility(View.INVISIBLE);
         displayForTeamA(scoreTeamA);
         displayForTeamB(scoreTeamB);
     }

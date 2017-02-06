@@ -35,7 +35,8 @@
 
                 <LinearLayout style="@style/layout_point">
 
-                    <TextView style="@style/team_name" />
+                    <TextView style="@style/team_name"
+                        android:text="Team A"/>
 
                     <TextView
                         android:id="@+id/team_a_score"
@@ -51,7 +52,8 @@
 
                 <LinearLayout style="@style/layout_point">
 
-                    <TextView style="@style/team_name" />
+                    <TextView style="@style/team_name"
+                        android:text="Team B"/>
 
                     <TextView
                         android:id="@+id/team_b_score"

@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
@@ -20,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
 
         // recovering the instance state
         if (savedInstanceState != null) {
@@ -31,7 +33,6 @@ public class MainActivity extends AppCompatActivity {
             setB = savedInstanceState.getInt("TEAM_B_SET");
         }else
             init();
-        setContentView(R.layout.activity_main);
     }
 
     // This callback is called only when there is a saved instance previously saved using
@@ -63,7 +64,6 @@ public class MainActivity extends AppCompatActivity {
     //initialize
     public void init() {
         cardWin = (CardView) findViewById(R.id.card_win);
-        cardWin.setVisibility(View.INVISIBLE);
         cardPoint = (CardView) findViewById(R.id.card_point);
 
         scoreViewA = (TextView) findViewById(R.id.team_a_score);
@@ -90,20 +90,18 @@ public class MainActivity extends AppCompatActivity {
     }
     //Increase the score for Team A.
     public void addForTeamA(View v) {
-        setGameA();
         if(scoreTeamA < 11)
             scoreTeamA ++;
         else
-            scoreTeamA = 0;
+            setGameA();
         displayForTeamA(scoreTeamA);
     }
     //Increase the score for Team B.
     public void addForTeamB(View v) {
-        setGameB();
         if(scoreTeamB < 11)
             scoreTeamB ++;
         else
-            scoreTeamB = 0;
+            setGameB();
         displayForTeamB(scoreTeamB);
     }
     //Displays the given score for Team A.
@@ -124,51 +122,55 @@ public class MainActivity extends AppCompatActivity {
     // Display the Set score.
     public void displaySetA(int score){
         setViewA.setText(String.valueOf(score));
+        winner();
     }
     public void displaySetB(int score){
         setViewB.setText(String.valueOf(score));
+        winner();
     }
 
     public void setGameA(){
-        setSetA();
-        if (scoreTeamA == 11 && gameA < 3){
+        if (scoreTeamA == 11){
             gameA++;
+            scoreTeamA = 0;
         }else
-            gameA = 0;
+            setSetA();
         displayGameA(gameA);
     }
     public void setGameB(){
-        setSetB();
-        if (scoreTeamB == 11 && gameB < 3 ){
+        if (scoreTeamB == 11 ){
             gameB++;
+            scoreTeamB = 0;
         }else
-            gameB = 0;
+            setSetB();
         displayGameB(gameB);
     }
 
     public void setSetA(){
-        if(gameA == 3 && setA < 3)
-            setA ++;
+        if(gameA == 3) {
+            setA++;
+            gameA = 0;
+        }
         displaySetA(setA);
-        winner();
     }
     public void setSetB(){
-        if(gameB == 3 && setB < 3)
-            setB ++;
+        if(gameB == 3) {
+            setB++;
+            gameB = 0;
+        }
         displaySetB(setB);
-        winner();
     }
 
     //winner card
     public void winner(){
         if(setA > setB && setA == 3){
-            cardWin.setVisibility(View.VISIBLE);
+            cardWin.setActivated(true);
             cardWin.setPadding(cardWin.getPaddingLeft(),16,cardWin.getPaddingRight(),cardWin.getContentPaddingBottom());
             cardPoint.setPadding(cardPoint.getPaddingLeft(),8,cardPoint.getPaddingRight(),cardPoint.getContentPaddingBottom());
             winnerText.setText("team a win");
             winnerText.setAllCaps(true);
         }else if(setB > setA && setB == 3){
-            cardWin.setVisibility(View.VISIBLE);
+            cardWin.setActivated(true);
             cardWin.setPadding(cardWin.getPaddingLeft(),16,cardWin.getPaddingRight(),cardWin.getContentPaddingBottom());
             cardPoint.setPadding(cardPoint.getPaddingLeft(),8,cardPoint.getPaddingRight(),cardPoint.getContentPaddingBottom());
             winnerText.setText("team b win");
@@ -180,7 +182,7 @@ public class MainActivity extends AppCompatActivity {
     */
     public void resetScore(View v) {
         scoreTeamA = scoreTeamB = gameA = gameB = setA = setB = 0;
-        cardWin.setVisibility(View.INVISIBLE);
+        cardWin.setActivated(false);
         displayForTeamA(scoreTeamA);
         displayForTeamB(scoreTeamB);
     }

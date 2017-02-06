@@ -46,7 +46,7 @@
                         android:padding="16dp"
                         android:text="Team A"
                         android:textColor="#616161"
-                        android:textSize="16sp" />
+                        android:textSize="20sp" />
 
                     <TextView
                         android:id="@+id/team_a_score"
@@ -87,7 +87,7 @@
                         android:padding="16dp"
                         android:text="Team B"
                         android:textColor="#616161"
-                        android:textSize="16sp" />
+                        android:textSize="20sp" />
 
                     <TextView
                         android:id="@+id/team_b_score"
@@ -131,7 +131,8 @@
                         android:fontFamily="sans-serif-medium"
                         android:text="Team Name"
                         android:textColor="#000000"
-                        android:textSize="14sp" />
+                        android:textSize="16sp"
+                        android:id="@+id/textView" />
 
                     <TextView
                         android:layout_width="0dp"
@@ -141,7 +142,7 @@
                         android:fontFamily="sans-serif-medium"
                         android:text="G"
                         android:textColor="#000000"
-                        android:textSize="14sp" />
+                        android:textSize="16sp" />
 
                     <TextView
                         android:layout_width="0dp"
@@ -151,7 +152,7 @@
                         android:fontFamily="sans-serif-medium"
                         android:text="S"
                         android:textColor="#000000"
-                        android:textSize="14sp" />
+                        android:textSize="16sp" />
                 </LinearLayout>
 
                 <LinearLayout

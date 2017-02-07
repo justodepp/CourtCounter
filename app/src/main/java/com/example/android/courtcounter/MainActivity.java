@@ -7,7 +7,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
@@ -17,6 +16,7 @@ public class MainActivity extends AppCompatActivity {
     TextView scoreViewA, scoreViewB, winnerText, gameViewA, gameViewB, setViewA, setViewB;
     private int scoreTeamA, scoreTeamB;
     private int gameA, gameB, setA, setB;
+    private boolean advA, advB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +49,6 @@ public class MainActivity extends AppCompatActivity {
         outState.putInt("TEAM_A_SET", setA);
         outState.putInt("TEAM_B_SET", setB);
     }
-
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
@@ -77,6 +76,8 @@ public class MainActivity extends AppCompatActivity {
 
         winnerText = (TextView) findViewById(R.id.winner);
 
+        advA = advB = false;
+
         setActionOnScrollUp();
     }
     //Set text on actionBar when scrolling up.
@@ -87,28 +88,89 @@ public class MainActivity extends AppCompatActivity {
         collapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
         collapsingToolbar.setTitle("PingPong - Score");
         collapsingToolbar.setExpandedTitleColor(ResourcesCompat.getColor(getResources(), android.R.color.transparent, null));
+        //collapsingToolbar.setBackgroundColor(ResourcesCompat.getColor(getResources(), R.color.colorPrimary, null));
     }
-    //Increase the score for Team A.
+    //Increase the score.
     public void addForTeamA(View v) {
         if(scoreTeamA < 11)
             scoreTeamA ++;
-        else
-            setGameA();
+        else if(scoreTeamA == 10 && scoreTeamA == scoreTeamB)
+            if(!advA && !advB)
+                advA = true;
+            if(!advA && advB)
+                advB = false;
+            if(advA) {
+                advA = false;
+                setGameA();
+            }
         displayForTeamA(scoreTeamA);
     }
-    //Increase the score for Team B.
     public void addForTeamB(View v) {
         if(scoreTeamB < 11)
             scoreTeamB ++;
-        else
+        else if(scoreTeamB == 10 && scoreTeamA == scoreTeamB)
+            if(!advB && !advA)
+                advB = true;
+        if(!advB && advA)
+            advA = false;
+        if(advB) {
+            advB = false;
             setGameB();
-        displayForTeamB(scoreTeamB);
+        }
+        displayForTeamA(scoreTeamB);
     }
-    //Displays the given score for Team A.
+    //Control Game point
+    public void setGameA(){
+        if (scoreTeamA == 11 && gameA < 3){
+            gameA++;
+            scoreTeamA = 0;
+        }else
+            setSetA();
+        displayGameA(gameA);
+    }
+    public void setGameB(){
+        if (scoreTeamB == 11 && gameB < 3 ){
+            gameB++;
+            scoreTeamB = 0;
+        }else
+            setSetB();
+        displayGameB(gameB);
+    }
+    //Control Set point
+    public void setSetA(){
+        if(gameA == 3) {
+            setA++;
+            gameA = 0;
+        }
+        displaySetA(setA);
+    }
+    public void setSetB(){
+        if(gameB == 3) {
+            setB++;
+            gameB = 0;
+        }
+        displaySetB(setB);
+    }
+    //Winner is..
+    public void winner(){
+        if(setA == 3){
+            cardWin.setVisibility(View.VISIBLE);
+            cardWin.setPadding(cardWin.getPaddingLeft(),16,cardWin.getPaddingRight(),cardWin.getContentPaddingBottom());
+            cardPoint.setPadding(cardPoint.getPaddingLeft(),8,cardPoint.getPaddingRight(),cardPoint.getContentPaddingBottom());
+            winnerText.setText("team a win");
+            winnerText.setAllCaps(true);
+        }else if(setB == 3) {
+            cardWin.setVisibility(View.VISIBLE);
+            cardWin.setPadding(cardWin.getPaddingLeft(), 16, cardWin.getPaddingRight(), cardWin.getContentPaddingBottom());
+            cardPoint.setPadding(cardPoint.getPaddingLeft(), 8, cardPoint.getPaddingRight(), cardPoint.getContentPaddingBottom());
+            winnerText.setText("team b win");
+            winnerText.setAllCaps(true);
+        }
+    }
+    //Displays the given score.
     public void displayForTeamA(int score) {
         scoreViewA.setText(String.valueOf(score));
     }
-    // Displays the given score for Team B.
     public void displayForTeamB(int score) {
         scoreViewB.setText(String.valueOf(score));
     }
@@ -128,61 +190,10 @@ public class MainActivity extends AppCompatActivity {
         setViewB.setText(String.valueOf(score));
         winner();
     }
-
-    public void setGameA(){
-        if (scoreTeamA == 11){
-            gameA++;
-            scoreTeamA = 0;
-        }else
-            setSetA();
-        displayGameA(gameA);
-    }
-    public void setGameB(){
-        if (scoreTeamB == 11 ){
-            gameB++;
-            scoreTeamB = 0;
-        }else
-            setSetB();
-        displayGameB(gameB);
-    }
-
-    public void setSetA(){
-        if(gameA == 3) {
-            setA++;
-            gameA = 0;
-        }
-        displaySetA(setA);
-    }
-    public void setSetB(){
-        if(gameB == 3) {
-            setB++;
-            gameB = 0;
-        }
-        displaySetB(setB);
-    }
-
-    //winner card
-    public void winner(){
-        if(setA > setB && setA == 3){
-            cardWin.setActivated(true);
-            cardWin.setPadding(cardWin.getPaddingLeft(),16,cardWin.getPaddingRight(),cardWin.getContentPaddingBottom());
-            cardPoint.setPadding(cardPoint.getPaddingLeft(),8,cardPoint.getPaddingRight(),cardPoint.getContentPaddingBottom());
-            winnerText.setText("team a win");
-            winnerText.setAllCaps(true);
-        }else if(setB > setA && setB == 3){
-            cardWin.setActivated(true);
-            cardWin.setPadding(cardWin.getPaddingLeft(),16,cardWin.getPaddingRight(),cardWin.getContentPaddingBottom());
-            cardPoint.setPadding(cardPoint.getPaddingLeft(),8,cardPoint.getPaddingRight(),cardPoint.getContentPaddingBottom());
-            winnerText.setText("team b win");
-            winnerText.setAllCaps(true);
-        }
-    }
-    /**
-     * Reset the score for Team A and Team B.
-    */
+    // Reset the score for Team A and Team B.
     public void resetScore(View v) {
         scoreTeamA = scoreTeamB = gameA = gameB = setA = setB = 0;
-        cardWin.setActivated(false);
+        cardWin.setVisibility(View.GONE);
         displayForTeamA(scoreTeamA);
         displayForTeamB(scoreTeamB);
     }

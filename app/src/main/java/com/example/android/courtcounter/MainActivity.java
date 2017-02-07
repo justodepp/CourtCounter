@@ -94,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
     public void addForTeamA(View v) {
         if(scoreTeamA < 11)
             scoreTeamA ++;
-        else if(scoreTeamA == 10 && scoreTeamA == scoreTeamB)
+        else if(scoreTeamA == 10 && scoreTeamA == scoreTeamB){
             if(!advA && !advB)
                 advA = true;
             if(!advA && advB)
@@ -103,20 +103,24 @@ public class MainActivity extends AppCompatActivity {
                 advA = false;
                 setGameA();
             }
+        }else
+            setGameA();
         displayForTeamA(scoreTeamA);
     }
     public void addForTeamB(View v) {
         if(scoreTeamB < 11)
             scoreTeamB ++;
-        else if(scoreTeamB == 10 && scoreTeamA == scoreTeamB)
-            if(!advB && !advA)
+        else if(scoreTeamB == 10 && scoreTeamA == scoreTeamB) {
+            if (!advB && !advA)
                 advB = true;
-        if(!advB && advA)
-            advA = false;
-        if(advB) {
-            advB = false;
+            if (!advB && advA)
+                advA = false;
+            if (advB) {
+                advB = false;
+                setGameB();
+            }
+        }else
             setGameB();
-        }
         displayForTeamA(scoreTeamB);
     }
     //Control Game point

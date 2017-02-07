@@ -121,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }else
             setGameB();
-        displayForTeamA(scoreTeamB);
+        displayForTeamB(scoreTeamB);
     }
     //Control Game point
     public void setGameA(){

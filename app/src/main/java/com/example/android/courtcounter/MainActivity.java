@@ -17,6 +17,7 @@ public class MainActivity extends AppCompatActivity {
     private int scoreTeamA, scoreTeamB;
     private int gameA, gameB, setA, setB;
     private boolean advA, advB;
+    private final int MAX_POINT = 3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +34,8 @@ public class MainActivity extends AppCompatActivity {
             setB = savedInstanceState.getInt("TEAM_B_SET");
         }else
             init();
+
+        setActionOnScrollUp();
     }
 
     // This callback is called only when there is a saved instance previously saved using
@@ -63,6 +66,8 @@ public class MainActivity extends AppCompatActivity {
     //initialize
     public void init() {
         cardWin = (CardView) findViewById(R.id.card_win);
+        cardWin.setVisibility(View.GONE);
+
         cardPoint = (CardView) findViewById(R.id.card_point);
 
         scoreViewA = (TextView) findViewById(R.id.team_a_score);
@@ -77,8 +82,6 @@ public class MainActivity extends AppCompatActivity {
         winnerText = (TextView) findViewById(R.id.winner);
 
         advA = advB = false;
-
-        setActionOnScrollUp();
     }
     //Set text on actionBar when scrolling up.
     public void setActionOnScrollUp(){
@@ -88,18 +91,18 @@ public class MainActivity extends AppCompatActivity {
         collapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
         collapsingToolbar.setTitle("PingPong - Score");
         collapsingToolbar.setExpandedTitleColor(ResourcesCompat.getColor(getResources(), android.R.color.transparent, null));
-        //collapsingToolbar.setBackgroundColor(ResourcesCompat.getColor(getResources(), R.color.colorPrimary, null));
+        toolbar.setBackgroundColor(ResourcesCompat.getColor(getResources(), R.color.colorPrimary, null));
     }
     //Increase the score.
     public void addForTeamA(View v) {
-        if(scoreTeamA < 11)
+        if(scoreTeamA < 11 && gameA < MAX_POINT && setA < MAX_POINT)
             scoreTeamA ++;
         else if(scoreTeamA == 10 && scoreTeamA == scoreTeamB){
             if(!advA && !advB)
                 advA = true;
-            if(!advA && advB)
+            else if(advB)
                 advB = false;
-            if(advA) {
+            else {
                 advA = false;
                 setGameA();
             }
@@ -108,68 +111,20 @@ public class MainActivity extends AppCompatActivity {
         displayForTeamA(scoreTeamA);
     }
     public void addForTeamB(View v) {
-        if(scoreTeamB < 11)
+        if(scoreTeamB < 11 && gameB < MAX_POINT && setB < MAX_POINT)
             scoreTeamB ++;
         else if(scoreTeamB == 10 && scoreTeamA == scoreTeamB) {
             if (!advB && !advA)
                 advB = true;
-            if (!advB && advA)
+            else if (advA)
                 advA = false;
-            if (advB) {
+            else {
                 advB = false;
                 setGameB();
             }
         }else
             setGameB();
         displayForTeamB(scoreTeamB);
-    }
-    //Control Game point
-    public void setGameA(){
-        if (scoreTeamA == 11 && gameA < 3){
-            gameA++;
-            scoreTeamA = 0;
-        }else
-            setSetA();
-        displayGameA(gameA);
-    }
-    public void setGameB(){
-        if (scoreTeamB == 11 && gameB < 3 ){
-            gameB++;
-            scoreTeamB = 0;
-        }else
-            setSetB();
-        displayGameB(gameB);
-    }
-    //Control Set point
-    public void setSetA(){
-        if(gameA == 3) {
-            setA++;
-            gameA = 0;
-        }
-        displaySetA(setA);
-    }
-    public void setSetB(){
-        if(gameB == 3) {
-            setB++;
-            gameB = 0;
-        }
-        displaySetB(setB);
-    }
-    //Winner is..
-    public void winner(){
-        if(setA == 3){
-            cardWin.setVisibility(View.VISIBLE);
-            cardWin.setPadding(cardWin.getPaddingLeft(),16,cardWin.getPaddingRight(),cardWin.getContentPaddingBottom());
-            cardPoint.setPadding(cardPoint.getPaddingLeft(),8,cardPoint.getPaddingRight(),cardPoint.getContentPaddingBottom());
-            winnerText.setText("team a win");
-            winnerText.setAllCaps(true);
-        }else if(setB == 3) {
-            cardWin.setVisibility(View.VISIBLE);
-            cardWin.setPadding(cardWin.getPaddingLeft(), 16, cardWin.getPaddingRight(), cardWin.getContentPaddingBottom());
-            cardPoint.setPadding(cardPoint.getPaddingLeft(), 8, cardPoint.getPaddingRight(), cardPoint.getContentPaddingBottom());
-            winnerText.setText("team b win");
-            winnerText.setAllCaps(true);
-        }
     }
     //Displays the given score.
     public void displayForTeamA(int score) {
@@ -178,12 +133,44 @@ public class MainActivity extends AppCompatActivity {
     public void displayForTeamB(int score) {
         scoreViewB.setText(String.valueOf(score));
     }
+    //Control Game point
+    public void setGameA(){
+        if (scoreTeamA == 11 && gameA < MAX_POINT && setA < MAX_POINT){
+            gameA++;
+            scoreTeamA = 0;
+        }else
+            setSetA();
+        displayGameA(gameA);
+    }
+    public void setGameB(){
+        if (scoreTeamB == 11 && gameB < MAX_POINT && setB < MAX_POINT){
+            gameB++;
+            scoreTeamB = 0;
+        }else
+            setSetB();
+        displayGameB(gameB);
+    }
     // Display the Game score.
     public void displayGameA(int score){
         gameViewA.setText(String.valueOf(score));
     }
     public void displayGameB(int score){
         gameViewB.setText(String.valueOf(score));
+    }
+    //Control Set point
+    public void setSetA(){
+        if(gameA == MAX_POINT && setA < MAX_POINT) {
+            setA++;
+            gameA = 0;
+        }
+        displaySetA(setA);
+    }
+    public void setSetB(){
+        if(gameB == MAX_POINT && setB < MAX_POINT) {
+            setB++;
+            gameB = 0;
+        }
+        displaySetB(setB);
     }
     // Display the Set score.
     public void displaySetA(int score){
@@ -194,11 +181,31 @@ public class MainActivity extends AppCompatActivity {
         setViewB.setText(String.valueOf(score));
         winner();
     }
+    //Winner is..
+    public void winner(){
+        if(setA == MAX_POINT){
+            cardWin.setVisibility(View.VISIBLE);
+            cardWin.setPadding(cardWin.getPaddingLeft(),16,cardWin.getPaddingRight(),cardWin.getContentPaddingBottom());
+            cardPoint.setPadding(cardPoint.getPaddingLeft(),8,cardPoint.getPaddingRight(),cardPoint.getContentPaddingBottom());
+            winnerText.setText("team a win");
+            winnerText.setAllCaps(true);
+        }else if(setB == MAX_POINT) {
+            cardWin.setVisibility(View.VISIBLE);
+            cardWin.setPadding(cardWin.getPaddingLeft(), 16, cardWin.getPaddingRight(), cardWin.getContentPaddingBottom());
+            cardPoint.setPadding(cardPoint.getPaddingLeft(), 8, cardPoint.getPaddingRight(), cardPoint.getContentPaddingBottom());
+            winnerText.setText("team b win");
+            winnerText.setAllCaps(true);
+        }
+    }
     // Reset the score for Team A and Team B.
     public void resetScore(View v) {
         scoreTeamA = scoreTeamB = gameA = gameB = setA = setB = 0;
         cardWin.setVisibility(View.GONE);
         displayForTeamA(scoreTeamA);
         displayForTeamB(scoreTeamB);
+        displayGameA(gameA);
+        displayGameB(gameB);
+        displaySetA(setA);
+        displaySetB(setB);
     }
 }

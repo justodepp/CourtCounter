@@ -32,9 +32,8 @@ public class MainActivity extends AppCompatActivity {
             gameB = savedInstanceState.getInt("TEAM_B_GAME");
             setA = savedInstanceState.getInt("TEAM_A_SET");
             setB = savedInstanceState.getInt("TEAM_B_SET");
-        }
-        init();
-        setActionOnScrollUp();
+        }else
+            init();
     }
 
     // This callback is called only when there is a saved instance previously saved using
@@ -54,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
+        init();
         scoreViewA.setText(String.valueOf(savedInstanceState.getInt("TEAM_A_SCORE")));
         scoreViewB.setText(String.valueOf(savedInstanceState.getInt("TEAM_B_SCORE")));
         gameViewA.setText(String.valueOf(savedInstanceState.getInt("TEAM_A_GAME")));
@@ -81,6 +81,8 @@ public class MainActivity extends AppCompatActivity {
         winnerText = (TextView) findViewById(R.id.winner);
 
         advA = advB = false;
+
+        setActionOnScrollUp();
     }
     //Set text on actionBar when scrolling up.
     public void setActionOnScrollUp(){

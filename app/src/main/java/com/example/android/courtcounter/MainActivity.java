@@ -17,7 +17,7 @@ public class MainActivity extends AppCompatActivity {
     private int scoreTeamA, scoreTeamB;
     private int gameA, gameB, setA, setB;
     private boolean advA, advB;
-    private final int MAX_POINT = 3;
+    private final int MAX_POINT = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,9 +32,8 @@ public class MainActivity extends AppCompatActivity {
             gameB = savedInstanceState.getInt("TEAM_B_GAME");
             setA = savedInstanceState.getInt("TEAM_A_SET");
             setB = savedInstanceState.getInt("TEAM_B_SET");
-        }else
-            init();
-
+        }
+        init();
         setActionOnScrollUp();
     }
 
@@ -95,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
     }
     //Increase the score.
     public void addForTeamA(View v) {
-        if(scoreTeamA < 11 && gameA < MAX_POINT && setA < MAX_POINT)
+        if(scoreTeamA < 11 && gameA < MAX_POINT && (setA < MAX_POINT || setB < MAX_POINT))
             scoreTeamA ++;
         else if(scoreTeamA == 10 && scoreTeamA == scoreTeamB){
             if(!advA && !advB)
@@ -111,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
         displayForTeamA(scoreTeamA);
     }
     public void addForTeamB(View v) {
-        if(scoreTeamB < 11 && gameB < MAX_POINT && setB < MAX_POINT)
+        if(scoreTeamB < 11 && gameB < MAX_POINT && (setB < MAX_POINT || setA < MAX_POINT))
             scoreTeamB ++;
         else if(scoreTeamB == 10 && scoreTeamA == scoreTeamB) {
             if (!advB && !advA)

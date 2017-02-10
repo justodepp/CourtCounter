@@ -13,6 +13,7 @@ public class MainActivity extends AppCompatActivity {
     CollapsingToolbarLayout collapsingToolbar;
     Toolbar toolbar;
     CardView cardPoint;
+    CustomDialog alert;
     TextView scoreViewA, scoreViewB, gameViewA, gameViewB, setViewA, setViewB;
     private int scoreTeamA, scoreTeamB;
     private int gameA, gameB, setA, setB;
@@ -87,11 +88,11 @@ public class MainActivity extends AppCompatActivity {
         collapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
         collapsingToolbar.setTitle("PingPong - Score");
         collapsingToolbar.setExpandedTitleColor(ResourcesCompat.getColor(getResources(), android.R.color.transparent, null));
-        toolbar.setBackgroundColor(ResourcesCompat.getColor(getResources(), R.color.colorPrimary, null));
+        collapsingToolbar.setBackgroundColor(ResourcesCompat.getColor(getResources(), R.color.colorPrimary, null));
     }
     //Increase the score.
     public void addForTeamA(View v) {
-        if(scoreTeamA < 11 && gameA < MAX_POINT && (setA < MAX_POINT || setB < MAX_POINT))
+        if( scoreTeamA < 11 && gameA < MAX_POINT && (setA < MAX_POINT || setB < MAX_POINT))
             scoreTeamA ++;
         else if(scoreTeamA == 10 && scoreTeamA == scoreTeamB){
             if(!advA && !advB)
@@ -107,7 +108,7 @@ public class MainActivity extends AppCompatActivity {
         displayForTeamA(scoreTeamA);
     }
     public void addForTeamB(View v) {
-        if(scoreTeamB < 11 && gameB < MAX_POINT && (setB < MAX_POINT || setA < MAX_POINT))
+        if( scoreTeamB < 11 && gameB < MAX_POINT && (setB < MAX_POINT || setA < MAX_POINT))
             scoreTeamB ++;
         else if(scoreTeamB == 10 && scoreTeamA == scoreTeamB) {
             if (!advB && !advA)
@@ -180,10 +181,11 @@ public class MainActivity extends AppCompatActivity {
     //Winner is..
     public void winner(){
         if(setA == MAX_POINT){
-            CustomDialog alert = new CustomDialog();
+            alert = new CustomDialog();
             alert.showDialog(MainActivity.this, "team a win");
-        }else if(setB == MAX_POINT) {
-            CustomDialog alert = new CustomDialog();
+        }
+        if(setB == MAX_POINT) {
+            alert = new CustomDialog();
             alert.showDialog(MainActivity.this, "team b win");
         }
     }

@@ -2,15 +2,10 @@ package com.example.android.courtcounter;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
-import android.support.v4.content.res.ResourcesCompat;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.CardView;
 import android.view.View;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.TextView;
 
 public class CustomDialog extends Activity{
@@ -37,5 +32,14 @@ public class CustomDialog extends Activity{
             }
         });
         dialog.show();
+
+        //Grab the window of the dialog, and change the width
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        Window window = dialog.getWindow();
+        lp.copyFrom(window.getAttributes());
+        //This makes the dialog take up the full width
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        window.setAttributes(lp);
     }
 }

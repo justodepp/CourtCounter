@@ -20,9 +20,13 @@
 
         <Button
             android:id="@+id/btn_dialog"
-            android:stateListAnimator="@null"
-            style="@style/dialog_button"
-            android:text="@string/btn_winner" />
+            style="?android:attr/buttonBarButtonStyle"
+            android:text="@string/btn_winner"
+            android:layout_gravity="end"
+            android:layout_margin="@dimen/c_hbottom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/holo_green_light"/>
 
     </LinearLayout>
 </android.support.v7.widget.CardView>

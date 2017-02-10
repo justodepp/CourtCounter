@@ -20,8 +20,8 @@
 
         <Button
             android:id="@+id/btn_dialog"
-            style="?android:attr/buttonBarButtonStyle"
             android:text="@string/btn_winner"
+            style="@style/Widget.AppCompat.Button.Borderless"
             android:layout_gravity="end"
             android:layout_margin="@dimen/c_hbottom"
             android:layout_width="wrap_content"

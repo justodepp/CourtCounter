@@ -8,6 +8,7 @@ import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
     CollapsingToolbarLayout collapsingToolbar;
@@ -19,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
     private int gameA, gameB, setA, setB;
     private boolean advA, advB;
     private final int MAX_POINT = 1;
+    final int TOAST_DUARION = Toast.LENGTH_SHORT;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

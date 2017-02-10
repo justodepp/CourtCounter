@@ -12,8 +12,8 @@ import android.widget.TextView;
 public class MainActivity extends AppCompatActivity {
     CollapsingToolbarLayout collapsingToolbar;
     Toolbar toolbar;
-    CardView cardWin, cardPoint;
-    TextView scoreViewA, scoreViewB, winnerText, gameViewA, gameViewB, setViewA, setViewB;
+    CardView cardPoint;
+    TextView scoreViewA, scoreViewB, gameViewA, gameViewB, setViewA, setViewB;
     private int scoreTeamA, scoreTeamB;
     private int gameA, gameB, setA, setB;
     private boolean advA, advB;
@@ -64,9 +64,6 @@ public class MainActivity extends AppCompatActivity {
 
     //initialize
     public void init() {
-        cardWin = (CardView) findViewById(R.id.card_win);
-        cardWin.setVisibility(View.GONE);
-
         cardPoint = (CardView) findViewById(R.id.card_point);
 
         scoreViewA = (TextView) findViewById(R.id.team_a_score);
@@ -77,8 +74,6 @@ public class MainActivity extends AppCompatActivity {
 
         setViewA = (TextView) findViewById(R.id.set_view_A);
         setViewB = (TextView) findViewById(R.id.set_view_B);
-
-        winnerText = (TextView) findViewById(R.id.winner);
 
         advA = advB = false;
 
@@ -185,23 +180,16 @@ public class MainActivity extends AppCompatActivity {
     //Winner is..
     public void winner(){
         if(setA == MAX_POINT){
-            cardWin.setVisibility(View.VISIBLE);
-            cardWin.setPadding(cardWin.getPaddingLeft(),16,cardWin.getPaddingRight(),cardWin.getContentPaddingBottom());
-            cardPoint.setPadding(cardPoint.getPaddingLeft(),8,cardPoint.getPaddingRight(),cardPoint.getContentPaddingBottom());
-            winnerText.setText("team a win");
-            winnerText.setAllCaps(true);
+            CustomDialog alert = new CustomDialog();
+            alert.showDialog(MainActivity.this, "team a win");
         }else if(setB == MAX_POINT) {
-            cardWin.setVisibility(View.VISIBLE);
-            cardWin.setPadding(cardWin.getPaddingLeft(), 16, cardWin.getPaddingRight(), cardWin.getContentPaddingBottom());
-            cardPoint.setPadding(cardPoint.getPaddingLeft(), 8, cardPoint.getPaddingRight(), cardPoint.getContentPaddingBottom());
-            winnerText.setText("team b win");
-            winnerText.setAllCaps(true);
+            CustomDialog alert = new CustomDialog();
+            alert.showDialog(MainActivity.this, "team b win");
         }
     }
     // Reset the score for Team A and Team B.
     public void resetScore(View v) {
         scoreTeamA = scoreTeamB = gameA = gameB = setA = setB = 0;
-        cardWin.setVisibility(View.GONE);
         displayForTeamA(scoreTeamA);
         displayForTeamB(scoreTeamB);
         displayGameA(gameA);

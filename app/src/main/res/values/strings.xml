@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">Score Keeper</string>
+    <string name="btn_winner">dismiss</string>
+    <string name="txt_winner">winner</string>
+    <string name="team_point">0</string>
+    <string name="btn_point">point</string>
+    <string name="team_name">Team Name</string>
+    <string name="game">G</string>
+    <string name="set">S</string>
+    <string name="team_a">team a</string>
+    <string name="team_b">team b</string>
+    <string name="btn_reset">reset</string>
 </resources>

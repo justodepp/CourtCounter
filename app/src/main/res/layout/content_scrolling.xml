@@ -13,18 +13,6 @@
         android:orientation="vertical">
 
         <android.support.v7.widget.CardView
-            android:id="@+id/card_win"
-            style="@style/CardStyle"
-            android:layout_marginTop="@dimen/c_htop">
-
-            <TextView
-                android:visibility="visible"
-                android:id="@+id/winner"
-                style="@style/winner"/>
-
-        </android.support.v7.widget.CardView>
-
-        <android.support.v7.widget.CardView
             style="@style/CardStyle"
             android:id="@+id/card_point"
             android:layout_marginBottom="@dimen/c_hbottom"
@@ -37,16 +25,18 @@
                 <LinearLayout style="@style/layout_point">
 
                     <TextView style="@style/team_name"
-                        android:text="Team A"/>
+                        android:text="@string/team_a"
+                        android:textAllCaps="true"/>
 
                     <TextView
                         android:id="@+id/team_a_score"
-                        style="@style/team_point" />
+                        style="@style/team_point"
+                        android:text="@string/team_point"/>
 
                     <Button
                         style="@style/btn_style"
                         android:onClick="addForTeamA"
-                        android:text="Point" />
+                        android:text="@string/btn_point" />
                 </LinearLayout>
 
                 <View style="@style/view_point" />
@@ -54,16 +44,18 @@
                 <LinearLayout style="@style/layout_point">
 
                     <TextView style="@style/team_name"
-                        android:text="Team B"/>
+                        android:text="@string/team_b"
+                        android:textAllCaps="true"/>
 
                     <TextView
                         android:id="@+id/team_b_score"
-                        style="@style/team_point" />
+                        style="@style/team_point"
+                        android:text="@string/team_point"/>
 
                     <Button
                         style="@style/btn_style"
                         android:onClick="addForTeamB"
-                        android:text="Point" />
+                        android:text="@string/btn_point" />
                 </LinearLayout>
             </LinearLayout>
         </android.support.v7.widget.CardView>
@@ -76,76 +68,78 @@
 
                 <LinearLayout
                     style="@style/std_layout"
-                    android:layout_margin="8dp"
+                    android:layout_margin="@dimen/c_hbottom"
                     android:orientation="horizontal">
 
                     <TextView
                         android:id="@+id/textView"
                         style="@style/bp_head"
                         android:layout_weight="2"
-                        android:text="Team Name" />
+                        android:text="@string/team_name" />
 
                     <TextView
                         style="@style/bp_head"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="G" />
+                        android:text="@string/game" />
 
                     <TextView
                         style="@style/bp_head"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="S" />
+                        android:text="@string/set" />
                 </LinearLayout>
 
                 <LinearLayout
                     style="@style/std_layout"
-                    android:layout_margin="8dp"
+                    android:layout_margin="@dimen/c_hbottom"
                     android:orientation="horizontal">
 
                     <TextView
                         style="@style/bp_row"
                         android:layout_weight="2"
-                        android:text="Team A" />
+                        android:text="@string/team_a"
+                        android:textAllCaps="true"/>
 
                     <TextView
                         android:id="@+id/game_view_A"
                         style="@style/bp_row"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="0" />
+                        android:text="@string/team_point" />
 
                     <TextView
                         android:id="@+id/set_view_A"
                         style="@style/bp_row"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="0" />
+                        android:text="@string/team_point" />
                 </LinearLayout>
 
                 <LinearLayout
                     style="@style/std_layout"
-                    android:layout_margin="8dp"
+                    android:layout_margin="@dimen/c_hbottom"
                     android:orientation="horizontal">
 
                     <TextView
                         style="@style/bp_row"
                         android:layout_weight="2"
-                        android:text="Team B" />
+                        android:text="@string/team_b"
+                        android:textAllCaps="true"/>
 
                     <TextView
                         android:id="@+id/game_view_B"
                         style="@style/bp_row"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="0" />
+                        android:text="@string/team_point" />
 
                     <TextView
                         android:id="@+id/set_view_B"
                         style="@style/bp_row"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="0" />
+                        android:text="@string/team_point" />
                 </LinearLayout>
 
             </LinearLayout>
@@ -157,7 +151,7 @@
             <Button
                 style="@style/btn_style"
                 android:onClick="resetScore"
-                android:text="Reset" />
+                android:text="@string/btn_reset" />
         </android.support.v7.widget.CardView>
 
     </LinearLayout>

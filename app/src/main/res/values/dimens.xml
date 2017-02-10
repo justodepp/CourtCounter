@@ -23,4 +23,8 @@
     <dimen name="p_text_size">56sp</dimen>
     <!-- View -->
     <dimen name="v_m">16dp</dimen>
+    <!-- Dialog -->
+    <dimen name="w_w">0dp</dimen>
+    <dimen name="w_h">34dp</dimen>
+    <dimen name="w_t">34sp</dimen>
 </resources>

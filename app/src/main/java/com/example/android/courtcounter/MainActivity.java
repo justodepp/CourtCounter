@@ -1,14 +1,22 @@
 package com.example.android.courtcounter;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import static android.R.attr.duration;
+import static android.R.attr.textAllCaps;
+import static android.icu.lang.UCharacter.GraphemeClusterBreak.T;
+import static android.widget.Toast.makeText;
+import static com.example.android.courtcounter.R.string.set;
 
 public class MainActivity extends AppCompatActivity {
     CollapsingToolbarLayout collapsingToolbar;
@@ -20,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
     private int gameA, gameB, setA, setB;
     private boolean advA, advB;
     private final int MAX_POINT = 1;
-    final int TOAST_DUARION = Toast.LENGTH_SHORT;
+    final int TOAST_DURATION = Toast.LENGTH_SHORT;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,35 +102,53 @@ public class MainActivity extends AppCompatActivity {
     }
     //Increase the score.
     public void addForTeamA(View v) {
-        if( scoreTeamA < 11 && gameA < MAX_POINT && (setA < MAX_POINT || setB < MAX_POINT))
-            scoreTeamA ++;
-        else if(scoreTeamA == 10 && scoreTeamA == scoreTeamB){
-            if(!advA && !advB)
-                advA = true;
-            else if(advB)
-                advB = false;
-            else {
-                advA = false;
-                setGameA();
-            }
-        }else
+        if(scoreTeamA == 10 && scoreTeamA == scoreTeamB && !advB && !advA){
+            advA = true;
+            Context context = getApplicationContext();
+            String text = "Advantage for TEAM A!";
+            Toast toast = makeText(context, text, TOAST_DURATION);
+            toast.show();
+        }else if(advB){
+            advB = false;
+        }else if(advA){
+            advA = false;
             setGameA();
+        }else if(scoreTeamA < 11 && gameA < MAX_POINT && setA < MAX_POINT && setB < MAX_POINT)
+            scoreTeamA ++;
+        else if(scoreTeamA == 11 || gameA == MAX_POINT) setGameA();
+        else if(setA == MAX_POINT || setB == MAX_POINT){
+            Context context = getApplicationContext();
+            String text = "GAME OVER";
+            Toast toast = makeText(context, text, TOAST_DURATION);
+            toast.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.CENTER_VERTICAL, 0, 0);
+            toast.show();
+        }
+
         displayForTeamA(scoreTeamA);
     }
     public void addForTeamB(View v) {
-        if( scoreTeamB < 11 && gameB < MAX_POINT && (setB < MAX_POINT || setA < MAX_POINT))
-            scoreTeamB ++;
-        else if(scoreTeamB == 10 && scoreTeamA == scoreTeamB) {
-            if (!advB && !advA)
-                advB = true;
-            else if (advA)
-                advA = false;
-            else {
-                advB = false;
-                setGameB();
-            }
-        }else
+        if(scoreTeamB == 10 && scoreTeamA == scoreTeamB && !advB && !advA){
+            advB = true;
+            Context context = getApplicationContext();
+            String text = "Advantage for TEAM B!";
+            Toast toast = makeText(context, text, TOAST_DURATION);
+            toast.show();
+        }else if(advA){
+            advA = false;
+        }else if(advB){
+            advB = false;
             setGameB();
+        }else if(scoreTeamB < 11 && gameB < MAX_POINT && setB < MAX_POINT && setA < MAX_POINT)
+            scoreTeamB ++;
+        else if(scoreTeamB == 11 || gameB == MAX_POINT) setGameB();
+        else if(setB == MAX_POINT || setA == MAX_POINT){
+            Context context = getApplicationContext();
+            String text = "GAME OVER";
+            Toast toast = makeText(context, text, TOAST_DURATION);
+            toast.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.CENTER_VERTICAL, 0, 0);
+            toast.show();
+        }
+
         displayForTeamB(scoreTeamB);
     }
     //Displays the given score.

@@ -11,12 +11,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import static android.R.attr.duration;
-import static android.R.attr.textAllCaps;
-import static android.icu.lang.UCharacter.GraphemeClusterBreak.T;
 import static android.widget.Toast.makeText;
-import static com.example.android.courtcounter.R.string.set;
 
 public class MainActivity extends AppCompatActivity {
     final int TOAST_DURATION = Toast.LENGTH_SHORT;
@@ -100,7 +95,6 @@ public class MainActivity extends AppCompatActivity {
         collapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
         collapsingToolbar.setTitle("PingPong - Score");
         collapsingToolbar.setExpandedTitleColor(ResourcesCompat.getColor(getResources(), android.R.color.transparent, null));
-        collapsingToolbar.setBackgroundColor(ResourcesCompat.getColor(getResources(), R.color.colorPrimary, null));
     }
 
     //Increase the score.

@@ -146,13 +146,10 @@
             </LinearLayout>
         </android.support.v7.widget.CardView>
 
-        <android.support.v7.widget.CardView style="@style/CardStyle"
-            android:layout_marginBottom="@dimen/c_hbottom">
             <Button
                 style="@style/btn_style"
                 android:onClick="resetScore"
                 android:text="@string/btn_reset" />
-        </android.support.v7.widget.CardView>
 
     </LinearLayout>
 

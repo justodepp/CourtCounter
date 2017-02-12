@@ -19,6 +19,8 @@ import static android.widget.Toast.makeText;
 import static com.example.android.courtcounter.R.string.set;
 
 public class MainActivity extends AppCompatActivity {
+    final int TOAST_DURATION = Toast.LENGTH_SHORT;
+    private final int MAX_POINT = 1;
     CollapsingToolbarLayout collapsingToolbar;
     Toolbar toolbar;
     CardView cardPoint;
@@ -27,8 +29,6 @@ public class MainActivity extends AppCompatActivity {
     private int scoreTeamA, scoreTeamB;
     private int gameA, gameB, setA, setB;
     private boolean advA, advB;
-    private final int MAX_POINT = 1;
-    final int TOAST_DURATION = Toast.LENGTH_SHORT;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
             gameB = savedInstanceState.getInt("TEAM_B_GAME");
             setA = savedInstanceState.getInt("TEAM_A_SET");
             setB = savedInstanceState.getInt("TEAM_B_SET");
-        }else
+        } else
             init();
     }
 
@@ -61,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
         outState.putInt("TEAM_A_SET", setA);
         outState.putInt("TEAM_B_SET", setB);
     }
+
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
@@ -90,8 +91,9 @@ public class MainActivity extends AppCompatActivity {
 
         setActionOnScrollUp();
     }
+
     //Set text on actionBar when scrolling up.
-    public void setActionOnScrollUp(){
+    public void setActionOnScrollUp() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -100,123 +102,137 @@ public class MainActivity extends AppCompatActivity {
         collapsingToolbar.setExpandedTitleColor(ResourcesCompat.getColor(getResources(), android.R.color.transparent, null));
         collapsingToolbar.setBackgroundColor(ResourcesCompat.getColor(getResources(), R.color.colorPrimary, null));
     }
+
     //Increase the score.
     public void addForTeamA(View v) {
-        if(scoreTeamA == 10 && scoreTeamA == scoreTeamB && !advB && !advA){
+        if (scoreTeamA == 10 && scoreTeamA == scoreTeamB && !advB && !advA) {
             advA = true;
             Context context = getApplicationContext();
             String text = "Advantage for TEAM A!";
             Toast toast = makeText(context, text, TOAST_DURATION);
             toast.show();
-        }else if(advB){
+        } else if (advB) {
             advB = false;
-        }else if(advA){
-            advA = false;
+        } else if (advA) {
             setGameA();
-        }else if(scoreTeamA < 11 && gameA < MAX_POINT && setA < MAX_POINT && setB < MAX_POINT)
-            scoreTeamA ++;
-        else if(scoreTeamA == 11 || gameA == MAX_POINT) setGameA();
-        else if(setA == MAX_POINT || setB == MAX_POINT){
+        } else if (scoreTeamA < 11 && gameA < MAX_POINT && setA < MAX_POINT && setB < MAX_POINT)
+            scoreTeamA++;
+        else if (scoreTeamA == 11 || gameA == MAX_POINT) setGameA();
+        else if (setA == MAX_POINT || setB == MAX_POINT) {
             Context context = getApplicationContext();
             String text = "GAME OVER";
             Toast toast = makeText(context, text, TOAST_DURATION);
-            toast.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.CENTER_VERTICAL, 0, 0);
+            toast.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL, 0, 0);
             toast.show();
         }
 
         displayForTeamA(scoreTeamA);
     }
+
     public void addForTeamB(View v) {
-        if(scoreTeamB == 10 && scoreTeamA == scoreTeamB && !advB && !advA){
+        if (scoreTeamB == 10 && scoreTeamA == scoreTeamB && !advB && !advA) {
             advB = true;
             Context context = getApplicationContext();
             String text = "Advantage for TEAM B!";
             Toast toast = makeText(context, text, TOAST_DURATION);
             toast.show();
-        }else if(advA){
+        } else if (advA) {
             advA = false;
-        }else if(advB){
-            advB = false;
+        } else if (advB) {
             setGameB();
-        }else if(scoreTeamB < 11 && gameB < MAX_POINT && setB < MAX_POINT && setA < MAX_POINT)
-            scoreTeamB ++;
-        else if(scoreTeamB == 11 || gameB == MAX_POINT) setGameB();
-        else if(setB == MAX_POINT || setA == MAX_POINT){
+        } else if (scoreTeamB < 11 && gameB < MAX_POINT && setB < MAX_POINT && setA < MAX_POINT)
+            scoreTeamB++;
+        else if (scoreTeamB == 11 || gameB == MAX_POINT) setGameB();
+        else if (setB == MAX_POINT || setA == MAX_POINT) {
             Context context = getApplicationContext();
             String text = "GAME OVER";
             Toast toast = makeText(context, text, TOAST_DURATION);
-            toast.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.CENTER_VERTICAL, 0, 0);
+            toast.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL, 0, 0);
             toast.show();
         }
 
         displayForTeamB(scoreTeamB);
     }
+
     //Displays the given score.
     public void displayForTeamA(int score) {
         scoreViewA.setText(String.valueOf(score));
     }
+
     public void displayForTeamB(int score) {
         scoreViewB.setText(String.valueOf(score));
     }
+
     //Control Game point
-    public void setGameA(){
-        if (scoreTeamA == 11 && gameA < MAX_POINT && setA < MAX_POINT){
+    public void setGameA() {
+        if (scoreTeamA == 11 && gameA < MAX_POINT && setA < MAX_POINT || advA) {
             gameA++;
-            scoreTeamA = 0;
-        }else
+            advA = false;
+            scoreTeamA = scoreTeamB = 0;
+        } else
             setSetA();
         displayGameA(gameA);
     }
-    public void setGameB(){
-        if (scoreTeamB == 11 && gameB < MAX_POINT && setB < MAX_POINT){
+
+    public void setGameB() {
+        if (scoreTeamB == 11 && gameB < MAX_POINT && setB < MAX_POINT || advB) {
             gameB++;
-            scoreTeamB = 0;
-        }else
+            advB = false;
+            scoreTeamB = scoreTeamA = 0;
+        } else
             setSetB();
         displayGameB(gameB);
     }
+
     // Display the Game score.
-    public void displayGameA(int score){
+    public void displayGameA(int score) {
         gameViewA.setText(String.valueOf(score));
     }
-    public void displayGameB(int score){
+
+    public void displayGameB(int score) {
         gameViewB.setText(String.valueOf(score));
     }
+
     //Control Set point
-    public void setSetA(){
-        if(gameA == MAX_POINT && setA < MAX_POINT) {
+    public void setSetA() {
+        if (gameA == MAX_POINT && setA < MAX_POINT) {
             setA++;
             gameA = 0;
         }
         displaySetA(setA);
     }
-    public void setSetB(){
-        if(gameB == MAX_POINT && setB < MAX_POINT) {
+
+    public void setSetB() {
+        if (gameB == MAX_POINT && setB < MAX_POINT) {
             setB++;
             gameB = 0;
         }
         displaySetB(setB);
     }
+
     // Display the Set score.
-    public void displaySetA(int score){
+    public void displaySetA(int score) {
         setViewA.setText(String.valueOf(score));
         winner();
     }
-    public void displaySetB(int score){
+
+    public void displaySetB(int score) {
         setViewB.setText(String.valueOf(score));
         winner();
     }
+
     //Winner is..
-    public void winner(){
-        if(setA == MAX_POINT){
+    public void winner() {
+        if (setA == MAX_POINT) {
             alert = new CustomDialog();
             alert.showDialog(MainActivity.this, "team a win");
         }
-        if(setB == MAX_POINT) {
+        if (setB == MAX_POINT) {
             alert = new CustomDialog();
             alert.showDialog(MainActivity.this, "team b win");
         }
     }
+
     // Reset the score for Team A and Team B.
     public void resetScore(View v) {
         scoreTeamA = scoreTeamB = gameA = gameB = setA = setB = 0;
@@ -226,5 +242,9 @@ public class MainActivity extends AppCompatActivity {
         displayGameB(gameB);
         displaySetA(setA);
         displaySetB(setB);
+        Context context = getApplicationContext();
+        String text = "GAME AS RESET!";
+        Toast toast = makeText(context, text, TOAST_DURATION);
+        toast.show();
     }
 }

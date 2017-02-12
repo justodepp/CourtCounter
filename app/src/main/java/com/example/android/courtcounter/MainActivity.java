@@ -165,6 +165,7 @@ public class MainActivity extends AppCompatActivity {
             scoreTeamA = scoreTeamB = 0;
         } else
             setSetA();
+        displayForTeamB(scoreTeamB);
         displayGameA(gameA);
     }
 
@@ -175,6 +176,7 @@ public class MainActivity extends AppCompatActivity {
             scoreTeamB = scoreTeamA = 0;
         } else
             setSetB();
+        displayForTeamA(scoreTeamA);
         displayGameB(gameB);
     }
 

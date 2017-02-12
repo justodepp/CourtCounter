@@ -25,6 +25,24 @@
     <style name="h_image" parent="std_layout">
         <item name="android:scaleType">centerCrop</item>
         <item name="android:src">@drawable/img_header</item>
+        <item name="android:fitsSystemWindows">true</item>
+    </style>
+    <!-- AppBar -->
+    <style name="appBar">
+        <item name="android:layout_height">@dimen/app_bar_height</item>
+        <item name="android:layout_width">match_parent</item>
+    </style>
+    <!-- Collapsing Toolbar -->
+    <style name="CollapsingToolbarLayout">
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:fitsSystemWindows">true</item>
+    </style>
+    <!--Toolbar -->
+    <style name="ToolbarTitle" parent="@style/TextAppearance.Widget.AppCompat.Toolbar.Title">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">?attr/actionBarSize</item>
+        <item name="android:textSize">24sp</item>
     </style>
     <!-- Button -->
     <style name="btn_style" parent="std_layout">
